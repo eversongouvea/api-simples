@@ -3,6 +3,9 @@ package br.com.gouvea.api.domain.place;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 /**
  * services Place.
@@ -18,6 +21,8 @@ public interface PlaceService {
 	void edit(Place place);
 	
 	Optional<Place> findById(Long id); 
+	
+	Page<Place> findPage(String name, Pageable pageable);
 	
 	List<Place> findAll();
 	

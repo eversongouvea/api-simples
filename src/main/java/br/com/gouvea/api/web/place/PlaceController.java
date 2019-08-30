@@ -5,6 +5,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gouvea.api.domain.place.Place;
@@ -34,10 +39,21 @@ public class PlaceController {
 	private PlaceService placeService;
 	
 	/**
+	 * Consulting page of Place
+	 * @return Page<Place>
+	 */
+	@GetMapping()
+	public ResponseEntity<Page<Place>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
+
+		return ResponseEntity.ok().body(placeService.findPage(name,pageable));
+	}
+	
+	/**
 	 * Consulting all
 	 * @return List<Place>
 	 */
-	@GetMapping()
+	@Cacheable(value="PlaceController.all")
+	@GetMapping(path = "/all")
 	public ResponseEntity<List<Place>> findAll() {
 
 		return ResponseEntity.ok().body(placeService.findAll());
@@ -75,6 +91,7 @@ public class PlaceController {
 	 * @return menssage
 	 */
 	@PostMapping
+	@CacheEvict(value="PlaceController.all",allEntries=true)
 	public ResponseEntity<String> create(@Valid @RequestBody Place place,
 			BindingResult result){
 		

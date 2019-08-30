@@ -2,9 +2,14 @@ package br.com.gouvea.api.web.place;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -70,4 +75,14 @@ public class PlaceServiceImpl  implements PlaceService{
 		return placeRepository.findAll();
 	}
 
+	@Override
+	public Page<Place> findPage(String name,@PageableDefault(sort="id", direction=Direction.ASC,size=10,page=0)  Pageable pageable) {
+
+		if(Objects.isNull(name)){
+		 return	placeRepository.findAll(pageable);
+		}
+		return	placeRepository.findPageByName(name,pageable);
+	}
+
+	
 }
