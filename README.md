@@ -15,7 +15,7 @@ Banco em memória: http://localhost:9090/h2/
 API
 
 Request: GET All
-http://apetitosos.com.br:9090/places
+http://localhost:9090/places
 
 Request: GET ONE
 http://localhost:9090/places/id/1
