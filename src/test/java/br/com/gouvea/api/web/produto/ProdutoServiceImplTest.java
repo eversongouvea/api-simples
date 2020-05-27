@@ -1,4 +1,4 @@
-package br.com.gouvea.api.web.place;
+package br.com.gouvea.api.web.produto;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -10,8 +10,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import br.com.gouvea.api.domain.place.Place;
-import br.com.gouvea.api.domain.place.PlaceRepository;
+import br.com.gouvea.api.domain.produto.Produto;
+import br.com.gouvea.api.domain.produto.ProdutoRepository;
 
 /**
  * Test Implements services Place.
@@ -21,22 +21,21 @@ import br.com.gouvea.api.domain.place.PlaceRepository;
  * @version 1.1
  */
 @RunWith(MockitoJUnitRunner.class)
-public class PlaceServiceImplTest {
+public class ProdutoServiceImplTest {
 
 	@Mock
-	private  PlaceRepository placeRepository;
+	private  ProdutoRepository placeRepository;
 	
 	@InjectMocks	
-	private PlaceServiceImpl service;
+	private ProdutoServiceImpl service;
 	
 	@Test()
 	public void TestCreatePlace()  {
 		
-		Place place = new Place();
-		place.setName("name");
-		place.setSlug("slug");
-		place.setState("state");
-		place.setCity("city");
+		Produto place = new Produto();
+		place.setNome("nome");
+		place.setDescricao("descricao");
+		place.setQuantidade(5);
 
 		service.create(place);
 	}
@@ -44,7 +43,7 @@ public class PlaceServiceImplTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void TestCreatePlaceWithId()  {
 		
-		Place place = new Place();
+		Produto place = new Produto();
 		
 		place.setId(1L);
 		
@@ -54,17 +53,16 @@ public class PlaceServiceImplTest {
 	@Test()
 	public void TestEditPlace()  {
 		
-		Place place = new Place();
+		Produto place = new Produto();
 		place.setId(1L);
-		place.setName("name");
-		place.setSlug("slug");
-		place.setState("state");
-		place.setCity("city");
+		place.setNome("nome");
+		place.setDescricao("descricao");
+		place.setQuantidade(5);
 		place.setCreated(LocalDateTime.now());
 		
 		Mockito.when(placeRepository.findById(1L)).thenReturn(Optional.of(place));
 		
-		place.setName("New update");
+		place.setNome("New update");
 
 		service.edit(place);
 	}
@@ -72,7 +70,7 @@ public class PlaceServiceImplTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void TestEditPlacewithoutId() {
 		
-		Place place = new Place();
+		Produto place = new Produto();
 		
 		service.edit(place);
 	}

@@ -1,12 +1,17 @@
-package br.com.gouvea.api.web.place;
+package br.com.gouvea.api.web.produto;
 
-import org.springframework.http.ResponseEntity;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 /**
- * Api Places.
+ * Api.
  * 
  * @author everson
  * @since 25/08/2019
@@ -16,10 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/")
 public class IndexController {
 
+	@ApiIgnore
 	@GetMapping()
-	public ResponseEntity<String> index() {
+	public void index(HttpServletResponse response) throws IOException{
 
-		return ResponseEntity.ok().body("Api RestFull");
+		response.sendRedirect("/swagger-ui.html");
 	}
 	
 	

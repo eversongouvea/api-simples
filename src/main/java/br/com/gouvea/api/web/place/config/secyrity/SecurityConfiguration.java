@@ -15,7 +15,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter{
 		.antMatchers("/assets/**").permitAll()
 		.antMatchers("/login").permitAll()
 		.anyRequest().authenticated().and()
-		.formLogin().defaultSuccessUrl("/actuator", true).and()
+		.formLogin().defaultSuccessUrl("/swagger-ui.html", true).and()
 		.logout().logoutUrl("/logout").and()
 		.httpBasic();
         
